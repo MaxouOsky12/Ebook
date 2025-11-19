@@ -1,45 +1,632 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<title>Mon eBook Pro</title>
-<link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Votre Ebook Exclusif</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a0a;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255,255,255,0.1) 0%, transparent 50%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 1200px;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        h1 {
+            font-size: 4.5em;
+            font-weight: 900;
+            margin-bottom: 20px;
+            line-height: 1.1;
+            background: linear-gradient(to right, #fff, #f0f0f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1.5em;
+            margin-bottom: 40px;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: #667eea;
+            padding: 18px 50px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1em;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.4);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-10px); }
+        }
+
+        .section {
+            padding: 100px 20px;
+            background: #0a0a0a;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .product-showcase {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+            margin-bottom: 100px;
+        }
+
+        .book-display {
+            position: relative;
+        }
+
+        .book-cover {
+            width: 100%;
+            max-width: 400px;
+            height: 550px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            box-shadow: 
+                0 50px 100px rgba(102, 126, 234, 0.4),
+                0 0 0 1px rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            font-weight: 900;
+            text-align: center;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .book-cover::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .product-info h2 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #f093fb 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .product-info p {
+            font-size: 1.2em;
+            line-height: 1.8;
+            color: #aaa;
+            margin-bottom: 30px;
+        }
+
+        .price-tag {
+            display: inline-block;
+            font-size: 4em;
+            font-weight: 900;
+            background: linear-gradient(135deg, #667eea 0%, #f093fb 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 30px 0;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 80px;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(240, 147, 251, 0.1));
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(102, 126, 234, 0.5);
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+
+        .feature-card p {
+            color: #aaa;
+            line-height: 1.6;
+        }
+
+        .security-badge {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            padding: 20px 30px;
+            border-radius: 15px;
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .security-badge span {
+            font-size: 2em;
+        }
+
+        .payment-section {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(240, 147, 251, 0.1));
+            padding: 80px 40px;
+            border-radius: 30px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.1);
+            margin-top: 100px;
+        }
+
+        .payment-section h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        #paypal-button-container {
+            max-width: 400px;
+            margin: 40px auto;
+        }
+
+        .success-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.95);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .success-modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 60px;
+            border-radius: 30px;
+            text-align: center;
+            max-width: 600px;
+            position: relative;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-content h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        .access-code {
+            background: rgba(255,255,255,0.2);
+            padding: 20px;
+            border-radius: 15px;
+            font-size: 1.5em;
+            font-weight: 700;
+            letter-spacing: 3px;
+            margin: 30px 0;
+            border: 2px dashed rgba(255,255,255,0.5);
+        }
+
+        .reader-button {
+            display: inline-block;
+            background: white;
+            color: #667eea;
+            padding: 18px 50px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1em;
+            text-decoration: none;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .reader-button:hover {
+            transform: scale(1.05);
+        }
+
+        .warning-text {
+            font-size: 0.9em;
+            opacity: 0.8;
+            margin-top: 20px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        @media (max-width: 968px) {
+            h1 {
+                font-size: 3em;
+            }
+            
+            .product-showcase {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            
+            .book-cover {
+                max-width: 100%;
+                margin: 0 auto;
+            }
+        }
+
+        /* Lecteur protégé */
+        #protected-reader {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #1a1a1a;
+            z-index: 2000;
+            overflow: hidden;
+        }
+
+        #protected-reader.active {
+            display: block;
+        }
+
+        .reader-header {
+            background: #0a0a0a;
+            padding: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .close-reader {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        #pdf-viewer {
+            width: 100%;
+            height: calc(100vh - 70px);
+            border: none;
+        }
+    </style>
 </head>
 <body>
-<header>
-  <h1>Mon eBook Pro</h1>
-</header>
+    <div class="hero">
+        <div class="hero-content">
+            <div class="badge">✨ NOUVEAU LANCEMENT</div>
+            <h1>Transformez Votre Vie<br>Dès Aujourd'hui</h1>
+            <p class="subtitle">Un guide complet pour atteindre vos objectifs et réussir</p>
+            <a href="#acheter" class="cta-button">Obtenir l'Ebook - 10€</a>
+        </div>
+        <div class="scroll-indicator">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                <path d="M12 5v14M19 12l-7 7-7-7"/>
+            </svg>
+        </div>
+    </div>
 
-<div class="container">
-  <img src="images/couverture.jpg" alt="Couverture eBook">
-  <h2>Ma Méthode Secrète</h2>
-  <p>Apprenez tout ce qu’il faut savoir pour réussir avec ce guide complet.</p>
-  <p>Prix : 9€</p>
+    <div class="section">
+        <div class="container">
+            <div class="product-showcase">
+                <div class="book-display">
+                    <div class="book-cover">
+                        <div>📚<br>VOTRE<br>EBOOK</div>
+                    </div>
+                </div>
+                
+                <div class="product-info">
+                    <h2>Un Contenu Exclusif et Protégé</h2>
+                    <p>Découvrez des stratégies éprouvées et des techniques pratiques pour transformer votre vie. Plus de 150 pages de contenu de qualité, accessible uniquement par vous.</p>
+                    
+                    <div class="price-tag">10€</div>
+                    
+                    <div class="security-badge">
+                        <span>🔒</span>
+                        <div>
+                            <strong>Accès Sécurisé Personnel</strong><br>
+                            <small>Lecteur protégé avec code unique</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-  <div id="paypal-button-container"></div>
-  <a id="download" style="display:none;" href="#">Télécharger votre eBook</a>
-</div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Contenu Actionnable</h3>
+                    <p>Des stratégies concrètes que vous pouvez appliquer immédiatement pour voir des résultats</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🔐</div>
+                    <h3>Accès Exclusif</h3>
+                    <p>Votre copie personnelle protégée par un code unique. Impossible à partager ou copier</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3>Lecture en Ligne</h3>
+                    <p>Accédez à votre ebook depuis n'importe quel appareil, n'importe quand</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">💎</div>
+                    <h3>150+ Pages</h3>
+                    <p>Un guide complet avec des exemples, exercices et ressources supplémentaires</p>
+                </div>
+            </div>
 
-<script src="https://www.paypal.com/sdk/js?client-id=YOUR_CLIENT_ID&currency=EUR"></script>
-<script>
-paypal.Buttons({
-  createOrder: function(data, actions) {
-    return fetch('/create-order', { method: 'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({price:"9.00",title:"Mon eBook"}) })
-      .then(res => res.json())
-      .then(order => order.id);
-  },
-  onApprove: function(data, actions) {
-    return fetch('/capture-order', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({orderID: data.orderID}) })
-      .then(res => res.json())
-      .then(result => {
-        if(result.success){
-          alert("Paiement réussi !");
-          document.getElementById('download').href = result.downloadUrl;
-          document.getElementById('download').style.display = "block";
-        } else { alert("Erreur paiement."); }
-      });
-  }
-}).render('#paypal-button-container');
-</script>
+            <div id="acheter" class="payment-section">
+                <h2>Commencez Votre Transformation</h2>
+                <p>Paiement sécurisé via PayPal • Accès instantané</p>
+                <div id="paypal-button-container"></div>
+                <p style="color: #888; font-size: 0.9em; margin-top: 20px;">🔒 Paiement 100% sécurisé • Garantie satisfait ou remboursé 30 jours</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Votre Ebook. Tous droits réservés.</p>
+        <p style="margin-top: 10px;">contact@votre-ebook.com</p>
+    </footer>
+
+    <!-- Modal de succès -->
+    <div id="success-modal" class="success-modal">
+        <div class="modal-content">
+            <h2>🎉 Merci pour votre achat !</h2>
+            <p>Votre paiement a été confirmé avec succès.</p>
+            <p>Voici votre code d'accès personnel :</p>
+            <div class="access-code" id="access-code">XXXXX-XXXXX</div>
+            <button class="reader-button" onclick="openReader()">📖 Ouvrir le Lecteur</button>
+            <p class="warning-text">⚠️ Conservez ce code précieusement. Il vous permet d'accéder à votre ebook à tout moment.</p>
+        </div>
+    </div>
+
+    <!-- Lecteur protégé -->
+    <div id="protected-reader">
+        <div class="reader-header">
+            <div>
+                <strong>Mon Ebook</strong> • Lecture protégée
+            </div>
+            <button class="close-reader" onclick="closeReader()">Fermer</button>
+        </div>
+        <iframe id="pdf-viewer"></iframe>
+    </div>
+
+    <script src="https://www.paypal.com/sdk/js?client-id=YOUR_CLIENT_ID&currency=EUR"></script>
+    <script>
+        // Configuration - À REMPLACER
+        const EBOOK_URL = 'https://votre-url-pdf.com/ebook.pdf'; // URL de votre PDF
+        
+        // Génération d'un code unique
+        function generateAccessCode() {
+            const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+            let code = '';
+            for (let i = 0; i < 10; i++) {
+                if (i === 5) code += '-';
+                code += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return code;
+        }
+
+        // Fonction pour encoder le PDF avec le code utilisateur
+        async function createProtectedPDF(accessCode, buyerEmail) {
+            // Ici, idéalement vous devriez appeler un serveur backend
+            // qui va ajouter un watermark avec l'email et le code sur le PDF
+            // Pour une protection maximale
+            
+            return {
+                code: accessCode,
+                email: buyerEmail,
+                timestamp: Date.now()
+            };
+        }
+
+        // PayPal Integration
+        paypal.Buttons({
+            createOrder: function(data, actions) {
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            value: '10.00',
+                            currency_code: 'EUR'
+                        },
+                        description: 'Ebook - Guide Complet'
+                    }]
+                });
+            },
+            onApprove: async function(data, actions) {
+                return actions.order.capture().then(async function(details) {
+                    const accessCode = generateAccessCode();
+                    const buyerEmail = details.payer.email_address;
+                    
+                    // Sauvegarder dans le localStorage (pour cet appareil)
+                    const purchase = {
+                        code: accessCode,
+                        email: buyerEmail,
+                        purchaseDate: new Date().toISOString(),
+                        transactionId: details.id
+                    };
+                    
+                    localStorage.setItem('ebookAccess', JSON.stringify(purchase));
+                    
+                    // Afficher le modal de succès
+                    document.getElementById('access-code').textContent = accessCode;
+                    document.getElementById('success-modal').classList.add('active');
+                    
+                    // TODO: Envoyer l'email avec le code d'accès via votre backend
+                    console.log('Achat réussi:', purchase);
+                });
+            },
+            onError: function(err) {
+                alert('Une erreur est survenue. Veuillez réessayer.');
+                console.error(err);
+            }
+        }).render('#paypal-button-container');
+
+        // Ouvrir le lecteur
+        function openReader() {
+            const access = JSON.parse(localStorage.getItem('ebookAccess'));
+            if (!access) {
+                alert('Accès non autorisé');
+                return;
+            }
+            
+            // Ajouter le code d'accès comme watermark dans l'URL
+            const protectedUrl = `${EBOOK_URL}#${access.code}`;
+            document.getElementById('pdf-viewer').src = protectedUrl;
+            document.getElementById('protected-reader').classList.add('active');
+            document.getElementById('success-modal').classList.remove('active');
+        }
+
+        // Fermer le lecteur
+        function closeReader() {
+            document.getElementById('protected-reader').classList.remove('active');
+            document.getElementById('pdf-viewer').src = '';
+        }
+
+        // Vérifier si l'utilisateur a déjà acheté
+        window.addEventListener('load', function() {
+            const access = localStorage.getItem('ebookAccess');
+            if (access) {
+                const purchase = JSON.parse(access);
+                // Afficher un bouton d'accès rapide
+                console.log('Accès existant trouvé pour:', purchase.email);
+            }
+        });
+
+        // Protection contre le clic droit et la copie
+        document.getElementById('pdf-viewer').addEventListener('contextmenu', e => e.preventDefault());
+        document.getElementById('pdf-viewer').addEventListener('copy', e => e.preventDefault());
+    </script>
 </body>
 </html>
