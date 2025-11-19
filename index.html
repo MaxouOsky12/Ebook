@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Mon eBook Pro</title>
+<style>
+body { font-family: Arial; margin: 0; padding: 0; background: #f4f4f4; }
+header { background: #0070ba; color: white; padding: 20px; text-align: center; }
+.container { max-width: 700px; margin: 30px auto; padding: 20px; background: white; border-radius: 10px; box-shadow: 0 0 10px #ccc; }
+img { max-width: 100%; border-radius: 10px; }
+h1 { color: #0070ba; }
+button { background: #0070ba; color: white; border: none; padding: 10px 20px; font-size: 16px; border-radius: 5px; cursor: pointer; }
+button:hover { background: #005fa3; }
+#download { display: none; margin-top: 20px; }
+</style>
+</head>
+<body>
+<header>
+<h1>Mon eBook Pro</h1>
+</header>
+
+<div class="container">
+<img src="https://via.placeholder.com/600x300.png?text=Couverture+de+l'eBook" alt="Couverture eBook">
+<h2>Titre de l'eBook : Ma Méthode Secrète</h2>
+<p>Description : Apprenez tout ce qu’il faut savoir pour réussir dans votre domaine avec ce guide complet.</p>
+<p>Prix : 9€</p>
+
+<!-- Conteneur PayPal -->
+<div id="paypal-button-container"></div>
+
+<!-- Lien de téléchargement -->
+<a id="download" href="ebook.pdf" download>Télécharger votre eBook</a>
+</div>
+
+<!-- SDK PayPal -->
+<script src="https://www.paypal.com/sdk/js?client-id=YOUR_SANDBOX_CLIENT_ID&currency=EUR"></script>
+<script>
+paypal.Buttons({
+    createOrder: function(data, actions) {
+        return actions.order.create({
+            purchase_units: [{
+                amount: { value: '9.00' }
+            }]
+        });
+    },
+    onApprove: function(data, actions) {
+        return actions.order.capture().then(function(details) {
+            alert('Paiement réussi ! Merci ' + details.payer.name.given_name);
+            // Affiche le lien de téléchargement
+            document.getElementById('download').style.display = 'block';
+        });
+    },
+    onError: function(err) {
+        console.error(err);
+        alert('Une erreur est survenue pendant le paiement.');
+    }
+}).render('#paypal-button-container');
+</script>
+</body>
+</html>
