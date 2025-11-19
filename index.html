@@ -3,27 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ebook Premium</title>
+    <title>Ebook Business Premium</title>
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap');
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; background: #050505; color: #fff; overflow-x: hidden; }
+        body { font-family: 'Inter', sans-serif; background: #0b0b0b; color: #fff; overflow-x: hidden; }
 
         /* HERO */
-        .hero { height: 100vh; background: radial-gradient(circle at top left, #8a2be2 0%, #4c1d95 35%, #0a0a0a 75%); display: flex; align-items: center; justify-content: center; text-align: center; padding: 20px; position: relative; }
+        .hero { height: 100vh; background: linear-gradient(135deg, #6b21a8, #9333ea); display: flex; align-items: center; justify-content: center; text-align: center; padding: 20px; position: relative; }
         .hero h1 { font-size: 4.5em; font-weight: 900; line-height: 1.1; background: linear-gradient(to right, #fff, #d4d4d4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .hero .subtitle { font-size: 1.4em; margin-top: 15px; max-width: 700px; margin-inline: auto; opacity: 0.9; }
-        .cta-button { margin-top: 40px; padding: 18px 55px; border-radius: 50px; background: #fff; color: #6d28d9; text-decoration: none; font-size: 1.2em; font-weight: 700; box-shadow: 0 10px 40px rgba(0,0,0,0.4); transition: .3s; }
-        .cta-button:hover { transform: translateY(-4px); box-shadow: 0 15px 50px rgba(0,0,0,0.5); }
+        .hero .subtitle { font-size: 1.4em; margin-top: 15px; max-width: 800px; margin-inline: auto; opacity: 0.9; }
+        .cta-button { margin-top: 40px; padding: 18px 55px; border-radius: 50px; background: #fff; color: #6d28d9; text-decoration: none; font-size: 1.2em; font-weight: 700; box-shadow: 0 10px 40px rgba(0,0,0,0.5); transition: .3s; }
+        .cta-button:hover { transform: translateY(-5px); box-shadow: 0 15px 50px rgba(0,0,0,0.6); }
 
         /* SECTION PRODUIT */
-        .section { padding: 120px 20px; }
+        .section { padding: 120px 20px; background: #0b0b0b; }
         .container { max-width: 1250px; margin: auto; }
         .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 70px; align-items: center; }
-        .book { width: 100%; max-width: 380px; height: 520px; background: linear-gradient(135deg, #6d28d9, #8b5cf6); border-radius: 25px; position: relative; box-shadow: 0 30px 60px rgba(109,40,217,0.45); }
+        .book { width: 100%; max-width: 380px; height: 520px; background: linear-gradient(135deg, #8b5cf6, #6d28d9); border-radius: 25px; position: relative; box-shadow: 0 30px 60px rgba(139,92,246,0.5); display:flex; align-items:center; justify-content:center; font-size:2em; font-weight:900; }
         .product-info h2 { font-size: 3em; background: linear-gradient(135deg, #a78bfa, #f0abfc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .product-info p { color: #bbb; font-size: 1.2em; margin-top: 15px; line-height: 1.8; }
+        .product-info p { color: #ccc; font-size: 1.2em; margin-top: 15px; line-height: 1.8; }
         .price-tag { margin-top: 25px; font-size: 4em; font-weight: 900; background: linear-gradient(135deg, #a78bfa, #f0abfc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
         /* FEATURES */
@@ -38,7 +38,7 @@
         .payment-section { margin-top: 100px; background: rgba(255,255,255,0.05); padding: 80px 50px; border-radius: 30px; text-align: center; }
 
         /* MODAL SUCCES */
-        #success-modal { display: none; position: fixed; inset: 0; backdrop-filter: blur(10px); background: rgba(0,0,0,0.85); z-index: 1000; align-items: center; justify-content: center; }
+        #success-modal { display: none; position: fixed; inset: 0; backdrop-filter: blur(10px); background: rgba(0,0,0,0.9); z-index: 1000; align-items: center; justify-content: center; }
         #success-modal.active { display: flex; }
         .modal-content { background: linear-gradient(135deg, #6d28d9, #8b5cf6); padding: 55px; border-radius: 25px; text-align: center; max-width: 550px; }
         .access-code { font-size: 1.7em; background: rgba(255,255,255,0.15); padding: 20px; border-radius: 12px; margin: 25px 0; border: 2px dashed rgba(255,255,255,0.5); }
@@ -48,6 +48,12 @@
         #protected-reader.active { display: block; }
         .reader-header { padding: 18px 30px; background: #111; border-bottom: 1px solid #222; display: flex; justify-content: space-between; align-items: center; }
         #pdf-viewer { width: 100%; height: calc(100vh - 70px); border: none; }
+
+        /* RESPONSIVE */
+        @media (max-width: 960px) {
+            .product-grid { grid-template-columns: 1fr; text-align:center; }
+            .book { margin: auto; }
+        }
     </style>
 </head>
 <body>
@@ -55,8 +61,8 @@
 <!-- HERO -->
 <div class="hero">
     <div>
-        <h1>Transformez Votre Vie</h1>
-        <p class="subtitle">Un guide puissant, structuré, exclusif — conçu pour provoquer un vrai changement.</p>
+        <h1>Boostez votre Business</h1>
+        <p class="subtitle">Apprenez à utiliser l'IA pour créer et développer votre entreprise rapidement et efficacement.</p>
         <a href="#acheter" class="cta-button">Obtenir l'Ebook – 10€</a>
     </div>
 </div>
@@ -64,27 +70,26 @@
 <!-- SECTION PRODUIT -->
 <div class="section">
     <div class="container product-grid">
-        <div class="book"></div>
+        <div class="book">📘</div>
         <div class="product-info">
-            <h2>Ebook Premium Sécurisé</h2>
-            <p>150+ pages de stratégies, d’exercices, et de méthodes éprouvées pour transformer votre vie.
-               Votre fichier est protégé et lié à votre accès unique.</p>
+            <h2>Ebook Business Premium</h2>
+            <p>Plus de 150 pages de stratégies, d’exemples concrets et d’exercices pour lancer ou améliorer votre business grâce à l’IA. Accès sécurisé et personnel.</p>
             <div class="price-tag">10€</div>
         </div>
     </div>
 
     <!-- FEATURES -->
     <div class="container features-grid">
-        <div class="feature-card"><div class="feature-icon">🎯</div><h3>Pratique & Actionnable</h3><p>Des étapes claires pour progresser rapidement.</p></div>
-        <div class="feature-card"><div class="feature-icon">🔐</div><h3>Protection Avancée</h3><p>L’accès au PDF passe par un lecteur sécurisé.</p></div>
-        <div class="feature-card"><div class="feature-icon">📱</div><h3>Accès Multi‑appareils</h3><p>Disponible partout, sans téléchargement direct.</p></div>
-        <div class="feature-card"><div class="feature-icon">💎</div><h3>Contenu Premium</h3><p>Ressources, exercices, exemples concrets.</p></div>
+        <div class="feature-card"><div class="feature-icon">🚀</div><h3>Lancement Rapide</h3><p>Appliquez des méthodes concrètes pour créer votre business en un temps record.</p></div>
+        <div class="feature-card"><div class="feature-icon">💼</div><h3>Stratégies Business</h3><p>Des conseils pour générer des revenus et optimiser votre entreprise.</p></div>
+        <div class="feature-card"><div class="feature-icon">🔐</div><h3>Protection Avancée</h3><p>Accès au PDF sécurisé, impossible à partager ou copier.</p></div>
+        <div class="feature-card"><div class="feature-icon">📱</div><h3>Lecture Multi-appareils</h3><p>Accessible sur ordinateur, tablette et mobile.</p></div>
     </div>
 
     <!-- PAYMENT -->
     <div id="acheter" class="container payment-section">
         <h2>Paiement Sécurisé</h2>
-        <p>Paiement PayPal • Accès instantané</p>
+        <p>Paiement via PayPal • Accès instantané après confirmation</p>
         <div id="paypal-button-container"></div>
     </div>
 </div>
@@ -110,44 +115,36 @@
 
 <script src="https://www.paypal.com/sdk/js?client-id=AahIS7f75aAB3OmrhAfLbxcz3QWWHdtFVx1c9gec8pYNiVHdxJpDqOQMie-Z9iteRE6I5_LFEhZ4JX8r&currency=EUR"></script>
 <script>
-    // PDF local
-    const protectedPdfURL = './Créer un Business avec l’IA – Guide complet pour débutants.pdf'; // mettre votre fichier ebook.pdf ici
+    const protectedPdfURL = './ebook.pdf';
 
-    // Génération du code d'accès
     function generateAccessCode() {
         const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
         let code = '';
-        for (let i = 0; i < 10; i++) {
-            if (i === 5) code += '-';
-            code += chars[Math.floor(Math.random() * chars.length)];
-        }
+        for (let i=0;i<10;i++){if(i===5)code+='-';code+=chars[Math.floor(Math.random()*chars.length)];}
         return code;
     }
 
-    // PayPal
     paypal.Buttons({
-        createOrder: function(data, actions) {
-            return actions.order.create({ purchase_units: [{ amount: { value: '10.00', currency_code: 'EUR' } }] });
-        },
-        onApprove: function(data, actions) {
-            return actions.order.capture().then(function(details) {
+        createOrder: function(data, actions){return actions.order.create({purchase_units:[{amount:{value:'10.00',currency_code:'EUR'}}]});},
+        onApprove: function(data, actions){
+            return actions.order.capture().then(function(details){
                 const code = generateAccessCode();
-                localStorage.setItem('ebookAccess', JSON.stringify({ code }));
+                localStorage.setItem('ebookAccess', JSON.stringify({code}));
                 document.getElementById('access-code').textContent = code;
                 document.getElementById('success-modal').classList.add('active');
+                console.log('Paiement simulé :', details); // permet de vérifier le processus sans payer
             });
         }
     }).render('#paypal-button-container');
 
-    function openReader() {
+    function openReader(){
         const access = JSON.parse(localStorage.getItem('ebookAccess'));
-        if (!access) return alert('Accès refusé');
+        if(!access) return alert('Accès refusé');
         document.getElementById('pdf-viewer').src = protectedPdfURL;
         document.getElementById('protected-reader').classList.add('active');
         document.getElementById('success-modal').classList.remove('active');
     }
-
-    function closeReader() {
+    function closeReader(){
         document.getElementById('protected-reader').classList.remove('active');
         document.getElementById('pdf-viewer').src = '';
     }
