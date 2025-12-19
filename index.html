@@ -3,151 +3,377 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ebook Business Premium</title>
-
+    <title>Mon Arbre Écolo - Jeu Éducatif</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap');
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; background: #0b0b0b; color: #fff; overflow-x: hidden; }
+        /* --- 2️⃣ DESIGN & INTERFACE --- */
+        :root {
+            --sky: #87CEEB;
+            --grass: #90EE90;
+            --dark-grass: #228B22;
+            --primary: #FF6B6B;
+            --text: #333;
+        }
 
-        /* HERO */
-        .hero { height: 100vh; background: linear-gradient(135deg, #6b21a8, #9333ea); display: flex; align-items: center; justify-content: center; text-align: center; padding: 20px; position: relative; }
-        .hero h1 { font-size: 4.5em; font-weight: 900; line-height: 1.1; background: linear-gradient(to right, #fff, #d4d4d4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .hero .subtitle { font-size: 1.4em; margin-top: 15px; max-width: 800px; margin-inline: auto; opacity: 0.9; }
-        .cta-button { margin-top: 40px; padding: 18px 55px; border-radius: 50px; background: #fff; color: #6d28d9; text-decoration: none; font-size: 1.2em; font-weight: 700; box-shadow: 0 10px 40px rgba(0,0,0,0.5); transition: .3s; }
-        .cta-button:hover { transform: translateY(-5px); box-shadow: 0 15px 50px rgba(0,0,0,0.6); }
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            background: var(--sky);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
 
-        /* SECTION PRODUIT */
-        .section { padding: 120px 20px; background: #0b0b0b; }
-        .container { max-width: 1250px; margin: auto; }
-        .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 70px; align-items: center; }
-        .book { width: 100%; max-width: 380px; height: 520px; background: linear-gradient(135deg, #8b5cf6, #6d28d9); border-radius: 25px; position: relative; box-shadow: 0 30px 60px rgba(139,92,246,0.5); display:flex; align-items:center; justify-content:center; font-size:2em; font-weight:900; }
-        .product-info h2 { font-size: 3em; background: linear-gradient(135deg, #a78bfa, #f0abfc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .product-info p { color: #ccc; font-size: 1.2em; margin-top: 15px; line-height: 1.8; }
-        .price-tag { margin-top: 25px; font-size: 4em; font-weight: 900; background: linear-gradient(135deg, #a78bfa, #f0abfc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        /* Conteneur du jeu */
+        #game-area {
+            width: 800px;
+            height: 600px;
+            background: linear-gradient(to bottom, var(--sky) 60%, var(--grass) 60%);
+            position: relative;
+            border: 8px solid #fff;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
 
-        /* FEATURES */
-        .features-grid { margin-top: 80px; display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 30px; }
-        .feature-card { background: rgba(255,255,255,0.05); padding: 35px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.08); transition: .3s; }
-        .feature-card:hover { transform: translateY(-5px); border-color: #8b5cf6; box-shadow: 0 10px 30px rgba(139,92,246,0.25); }
-        .feature-icon { font-size: 2.5em; margin-bottom: 15px; }
-        .feature-card h3 { font-size: 1.6em; margin-bottom: 10px; }
-        .feature-card p { color: #aaa; }
+        /* Interface Utilisateur (HUD) */
+        .hud {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            display: flex;
+            justify-content: space-between;
+            pointer-events: none; /* Permet de cliquer à travers */
+        }
 
-        /* PAYMENT */
-        .payment-section { margin-top: 100px; background: rgba(255,255,255,0.05); padding: 80px 50px; border-radius: 30px; text-align: center; }
+        .panel {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 20px;
+            border-radius: 15px;
+            font-weight: bold;
+            color: var(--text);
+            box-shadow: 0 4px 0 rgba(0,0,0,0.1);
+        }
 
-        /* MODAL SUCCES */
-        #success-modal { display: none; position: fixed; inset: 0; backdrop-filter: blur(10px); background: rgba(0,0,0,0.9); z-index: 1000; align-items: center; justify-content: center; }
-        #success-modal.active { display: flex; }
-        .modal-content { background: linear-gradient(135deg, #6d28d9, #8b5cf6); padding: 55px; border-radius: 25px; text-align: center; max-width: 550px; }
-        .access-code { font-size: 1.7em; background: rgba(255,255,255,0.15); padding: 20px; border-radius: 12px; margin: 25px 0; border: 2px dashed rgba(255,255,255,0.5); }
+        /* Personnage (Carré coloré avec yeux) */
+        #player {
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary);
+            position: absolute;
+            bottom: 100px;
+            left: 50px;
+            border-radius: 10px;
+            border: 3px solid #fff;
+            transition: transform 0.1s;
+            z-index: 10;
+        }
+        /* Yeux du personnage pour le rendre mignon */
+        #player::before, #player::after {
+            content: '';
+            position: absolute;
+            top: 10px;
+            width: 8px;
+            height: 8px;
+            background: white;
+            border-radius: 50%;
+        }
+        #player::before { left: 10px; }
+        #player::after { right: 10px; }
 
-        /* LECTEUR PROTÉGÉ */
-        #protected-reader { display: none; position: fixed; inset: 0; background: #0a0a0a; z-index: 2000; }
-        #protected-reader.active { display: block; }
-        .reader-header { padding: 18px 30px; background: #111; border-bottom: 1px solid #222; display: flex; justify-content: space-between; align-items: center; }
-        #pdf-viewer { width: 100%; height: calc(100vh - 70px); border: none; }
+        /* Arbre Quotidien */
+        #tree-container {
+            position: absolute;
+            bottom: 150px; /* Positionné sur l'herbe */
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            transition: transform 0.3s ease-out;
+        }
 
-        /* RESPONSIVE */
-        @media (max-width: 960px) {
-            .product-grid { grid-template-columns: 1fr; text-align:center; }
-            .book { margin: auto; }
+        #tree-sprite {
+            font-size: 80px;
+            line-height: 1;
+            filter: drop-shadow(0 5px 5px rgba(0,0,0,0.2));
+            transition: filter 0.3s, transform 0.3s;
+        }
+
+        /* Barre de progression de l'arbre */
+        #tree-needs {
+            background: white;
+            padding: 5px;
+            border-radius: 10px;
+            margin-top: 5px;
+            display: none; /* Caché si on est loin */
+        }
+
+        .action-btn {
+            background: #fff;
+            border: 2px solid #ddd;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            font-size: 20px;
+            margin: 0 2px;
+            transition: transform 0.1s, background 0.2s;
+        }
+        .action-btn:hover { transform: scale(1.1); background: #f0f0f0; }
+        .action-btn.done { background: #90EE90; opacity: 0.5; pointer-events: none; }
+
+        /* Message de plantation réelle */
+        #success-message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            background: #fff;
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 0 50px rgba(0,0,0,0.3);
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 100;
+        }
+        #success-message h2 { color: var(--dark-grass); margin-top: 0; }
+        #success-message p { color: #555; }
+        
+        /* Outils de debug (Simulation Temps) */
+        #debug-tools {
+            margin-top: 10px;
+            background: #eee;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        button.sim-btn {
+            background: #333;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
 
-<!-- HERO -->
-<div class="hero">
-    <div>
-        <h1>Boostez votre Business</h1>
-        <p class="subtitle">Apprenez à utiliser l'IA pour créer et développer votre entreprise rapidement et efficacement.</p>
-        <a href="#acheter" class="cta-button">Obtenir l'Ebook – 10€</a>
-    </div>
-</div>
+    <div id="game-area">
+        <div class="hud">
+            <div class="panel">🏆 Arbres plantés : <span id="score">0</span></div>
+            <div class="panel">🕒 Heure : <span id="clock">08:00</span></div>
+        </div>
 
-<!-- SECTION PRODUIT -->
-<div class="section">
-    <div class="container product-grid">
-        <div class="book">📘</div>
-        <div class="product-info">
-            <h2>Ebook Business Premium</h2>
-            <p>Plus de 150 pages de stratégies, d’exemples concrets et d’exercices pour lancer ou améliorer votre business grâce à l’IA. Accès sécurisé et personnel.</p>
-            <div class="price-tag">10€</div>
+        <div id="tree-container">
+            <div id="tree-sprite">🌱</div>
+            <div id="tree-needs">
+                <button class="action-btn" onclick="careAction('water')" title="Arroser">💧</button>
+                <button class="action-btn" onclick="careAction('food')" title="Nourrir">🍂</button>
+                <button class="action-btn" onclick="careAction('love')" title="Protéger">❤️</button>
+            </div>
+        </div>
+
+        <div id="player"></div>
+
+        <div id="success-message">
+            <h2>Bravo ! 🌍</h2>
+            <p>Tu as bien pris soin de ton arbre virtuel.</p>
+            <p><strong>Un vrai arbre a été "planté" !</strong><br>(Simulation API Ecosia/Tree-Nation)</p>
+            <button onclick="resetGame()" style="margin-top:15px; padding:10px 20px; background:var(--primary); color:white; border:none; border-radius:5px; cursor:pointer;">Planter un autre arbre</button>
         </div>
     </div>
 
-    <!-- FEATURES -->
-    <div class="container features-grid">
-        <div class="feature-card"><div class="feature-icon">🚀</div><h3>Lancement Rapide</h3><p>Appliquez des méthodes concrètes pour créer votre business en un temps record.</p></div>
-        <div class="feature-card"><div class="feature-icon">💼</div><h3>Stratégies Business</h3><p>Des conseils pour générer des revenus et optimiser votre entreprise.</p></div>
-        <div class="feature-card"><div class="feature-icon">🔐</div><h3>Protection Avancée</h3><p>Accès au PDF sécurisé, impossible à partager ou copier.</p></div>
-        <div class="feature-card"><div class="feature-icon">📱</div><h3>Lecture Multi-appareils</h3><p>Accessible sur ordinateur, tablette et mobile.</p></div>
+    <div id="debug-tools">
+        <strong>Outils de test (Prototype) :</strong>
+        <button class="sim-btn" onclick="setTime(7)">Matin (7h)</button>
+        <button class="sim-btn" onclick="setTime(12)">Midi (12h)</button>
+        <button class="sim-btn" onclick="setTime(18)">Soir (18h)</button>
+        <span>Utilise les flèches ou ZQSD pour bouger.</span>
     </div>
 
-    <!-- PAYMENT -->
-    <div id="acheter" class="container payment-section">
-        <h2>Paiement Sécurisé</h2>
-        <p>Paiement via PayPal • Accès instantané après confirmation</p>
-        <div id="paypal-button-container"></div>
-    </div>
-</div>
+    <script>
+        // --- CONFIGURATION ---
+        const player = document.getElementById('player');
+        const treeContainer = document.getElementById('tree-container');
+        const treeSprite = document.getElementById('tree-sprite');
+        const treeNeedsDiv = document.getElementById('tree-needs');
+        const scoreEl = document.getElementById('score');
+        const clockEl = document.getElementById('clock');
+        const successMsg = document.getElementById('success-message');
 
-<!-- MODAL SUCCESS -->
-<div id="success-modal">
-    <div class="modal-content">
-        <h2>🎉 Merci pour votre achat !</h2>
-        <p>Voici votre code d'accès personnel :</p>
-        <div id="access-code" class="access-code"></div>
-        <button class="cta-button" onclick="openReader()">📖 Ouvrir le Lecteur</button>
-    </div>
-</div>
+        // État du jeu
+        let gameState = {
+            score: 0,
+            hour: 8,
+            gameActive: true,
+            tree: {
+                stage: 0, // 0: graine, 1: pousse, 2: arbre, 3: grand arbre
+                actionsNeeded: { water: false, food: false, love: false }
+            },
+            player: { x: 50, y: 450, speed: 5 }
+        };
 
-<!-- LECTEUR PROTÉGÉ -->
-<div id="protected-reader">
-    <div class="reader-header">
-        <strong>Lecture protégée</strong>
-        <button class="cta-button" style="padding:10px 20px;font-size:0.9em;" onclick="closeReader()">Fermer</button>
-    </div>
-    <iframe id="pdf-viewer"></iframe>
-</div>
+        // --- 1️⃣ MOUVEMENT DU PERSONNAGE (JS Pur) ---
+        const keys = {};
 
-<script src="https://www.paypal.com/sdk/js?client-id=AahIS7f75aAB3OmrhAfLbxcz3QWWHdtFVx1c9gec8pYNiVHdxJpDqOQMie-Z9iteRE6I5_LFEhZ4JX8r&currency=EUR"></script>
-<script>
-    const protectedPdfURL = './Créer un Business avec l’IA – Guide complet pour débutants.pdf';
+        window.addEventListener('keydown', (e) => {
+            keys[e.key] = true;
+            keys[e.key.toLowerCase()] = true; // Support majuscules/minuscules
+        });
+        window.addEventListener('keyup', (e) => {
+            keys[e.key] = false;
+            keys[e.key.toLowerCase()] = false;
+        });
 
-    function generateAccessCode() {
-        const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-        let code = '';
-        for (let i=0;i<10;i++){if(i===5)code+='-';code+=chars[Math.floor(Math.random()*chars.length)];}
-        return code;
-    }
+        function gameLoop() {
+            if (!gameState.gameActive) return;
 
-    paypal.Buttons({
-        createOrder: function(data, actions){return actions.order.create({purchase_units:[{amount:{value:'10.00',currency_code:'EUR'}}]});},
-        onApprove: function(data, actions){
-            return actions.order.capture().then(function(details){
-                const code = generateAccessCode();
-                localStorage.setItem('ebookAccess', JSON.stringify({code}));
-                document.getElementById('access-code').textContent = code;
-                document.getElementById('success-modal').classList.add('active');
-                console.log('Paiement simulé :', details); // permet de vérifier le processus sans payer
-            });
+            // Déplacement X (Gauche/Droite)
+            if (keys['ArrowRight'] || keys['d']) gameState.player.x += gameState.player.speed;
+            if (keys['ArrowLeft'] || keys['q'] || keys['a']) gameState.player.x -= gameState.player.speed;
+
+            // Déplacement Y (Haut/Bas - limité à la zone d'herbe en bas)
+            if (keys['ArrowUp'] || keys['z'] || keys['w']) gameState.player.y -= gameState.player.speed;
+            if (keys['ArrowDown'] || keys['s']) gameState.player.y += gameState.player.speed;
+
+            // Limites de l'écran
+            if (gameState.player.x < 0) gameState.player.x = 0;
+            if (gameState.player.x > 750) gameState.player.x = 750;
+            if (gameState.player.y < 300) gameState.player.y = 300; // Ligne d'horizon
+            if (gameState.player.y > 550) gameState.player.y = 550;
+
+            // Appliquer la position
+            player.style.left = gameState.player.x + 'px';
+            player.style.top = gameState.player.y + 'px';
+
+            // Interaction : Est-ce que le joueur est proche de l'arbre ?
+            checkProximityToTree();
+
+            requestAnimationFrame(gameLoop);
         }
-    }).render('#paypal-button-container');
 
-    function openReader(){
-        const access = JSON.parse(localStorage.getItem('ebookAccess'));
-        if(!access) return alert('Accès refusé');
-        document.getElementById('pdf-viewer').src = protectedPdfURL;
-        document.getElementById('protected-reader').classList.add('active');
-        document.getElementById('success-modal').classList.remove('active');
-    }
-    function closeReader(){
-        document.getElementById('protected-reader').classList.remove('active');
-        document.getElementById('pdf-viewer').src = '';
-    }
-</script>
+        // --- LOGIQUE DE L'ARBRE ET DU TEMPS ---
+
+        function initDay() {
+            // Réinitialiser les besoins de l'arbre
+            gameState.tree.actionsNeeded = { water: true, food: true, love: true };
+            gameState.tree.stage = 0;
+            updateTreeVisuals();
+            
+            // Réinitialiser les boutons
+            document.querySelectorAll('.action-btn').forEach(btn => btn.classList.remove('done'));
+            successMsg.style.transform = "translate(-50%, -50%) scale(0)";
+            gameState.gameActive = true;
+        }
+
+        function checkProximityToTree() {
+            // Position de l'arbre (fixe au centre)
+            const treeX = 400 - 25; // Centre - moitié largeur
+            const treeY = 400; // Position approximative Y
+
+            const dist = Math.hypot(gameState.player.x - treeX, gameState.player.y - treeY);
+
+            // Si distance < 100px, afficher les options d'entretien
+            if (dist < 100 && gameState.hour >= 8 && gameState.hour < 17) {
+                treeNeedsDiv.style.display = 'block';
+            } else {
+                treeNeedsDiv.style.display = 'none';
+            }
+        }
+
+        // Action d'entretien (Click sur bouton)
+        window.careAction = function(type) {
+            if (!gameState.tree.actionsNeeded[type]) return; // Déjà fait
+
+            // Marquer comme fait
+            gameState.tree.actionsNeeded[type] = false;
+            
+            // Animation bouton
+            const btn = document.querySelector(`.action-btn[onclick="careAction('${type}')"]`);
+            btn.classList.add('done');
+
+            // Faire grandir l'arbre
+            gameState.tree.stage++;
+            updateTreeVisuals();
+
+            // Vérifier victoire
+            checkWinCondition();
+        }
+
+        function updateTreeVisuals() {
+            // Animation de "pop"
+            treeSprite.style.transform = "scale(1.2)";
+            setTimeout(() => treeSprite.style.transform = "scale(1)", 200);
+
+            // Changer le sprite selon le stade
+            const stages = ['🌱', '🌿', '🌳', '🌲'];
+            treeSprite.textContent = stages[gameState.tree.stage];
+            
+            // Changer couleur légèrement pour feedback
+            if(gameState.tree.stage === 3) {
+                treeSprite.style.filter = "drop-shadow(0 0 10px gold)";
+            } else {
+                treeSprite.style.filter = "drop-shadow(0 5px 5px rgba(0,0,0,0.2))";
+            }
+        }
+
+        function checkWinCondition() {
+            const needs = gameState.tree.actionsNeeded;
+            // Si tout est false (donc tout a été fait)
+            if (!needs.water && !needs.food && !needs.love) {
+                triggerWin();
+            }
+        }
+
+        function triggerWin() {
+            gameState.score++;
+            scoreEl.textContent = gameState.gameState; // bug fix: scoreEl.textContent = gameState.score
+            scoreEl.textContent = gameState.score;
+            
+            // Afficher message
+            setTimeout(() => {
+                successMsg.style.transform = "translate(-50%, -50%) scale(1)";
+                // Simuler appel API ici
+                console.log("API CALL: Tree Planted via Ecosia/Tree-Nation");
+            }, 500);
+        }
+
+        window.resetGame = function() {
+            initDay();
+        }
+
+        // --- SIMULATION DU TEMPS (Horloge) ---
+        // Le temps passe vite pour le prototype : 1 seconde réelle = 10 minutes jeu
+        setInterval(() => {
+            if (!gameState.gameActive) return;
+            
+            // Avancer l'heure seulement si on n'est pas bloqué sur une heure fixe par les boutons de test
+            // Pour ce prototype simple, on incrémente l'heure doucement
+            // (Logique simplifiée pour démo)
+        }, 1000);
+
+        // Fonction pour forcer l'heure (Test du prototype)
+        window.setTime = function(h) {
+            gameState.hour = h;
+            clockEl.textContent = (h < 10 ? '0'+h : h) + ":00";
+            
+            // Gestion jour/nuit visuelle
+            const gameArea = document.getElementById('game-area');
+            if (h < 8 || h >= 18) {
+                gameArea.style.filter = "brightness(0.5)"; // Nuit
+                treeNeedsDiv.style.display = 'none'; // Impossible de travailler la nuit
+            } else {
+                gameArea.style.filter = "brightness(1)"; // Jour
+            }
+        }
+
+        // Lancer le jeu
+        initDay();
+        gameLoop();
+
+    </script>
 </body>
 </html>
